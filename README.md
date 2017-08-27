@@ -5,7 +5,7 @@ The program originally created by Ziqumu was modified and upgraded.
 
 # Features
 New features include:
-* 100 lines display, so you can see old messages
+* 100 lines memory for display, so you can see old messages
 * Faster screen
 * Ability to change line ending between CRLF/LF
 * Ability to change baud rate of serial connection
