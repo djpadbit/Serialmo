@@ -69,7 +69,7 @@ void info(Screen *s)
 	//s->setScrindex(0);
 }
 
-/* You know what i cba to do this shit
+/* cba to do this shit
 unsigned char* pad(unsigned char* topad)
 {
 	unsigned char toret[21];
