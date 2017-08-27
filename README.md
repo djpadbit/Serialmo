@@ -13,3 +13,4 @@ New features include:
 
 # Credits
 * Ziqumu for making the original program
+* Pierre "PierrotLL" Le Gall for MonochromeLib
