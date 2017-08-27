@@ -63,6 +63,8 @@ void info(Screen *s)
 	s->writeLine("F4: key repeat");
 	s->writeLine("F5: show sended char");
 	s->writeLine("F6: quit");
+	s->writeLine("UP: Go up");
+	s->writeLine("DOWN: Go down");
 	s->writeLine("SHIFT: Show info");
 	s->writeLine("OPTN: CRLF/LF");
 	s->writeLine("VARS: Serial speed");

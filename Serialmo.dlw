@@ -2,19 +2,19 @@
 
 [_1]
 Type=5
-Order=2
+Order=1
 Top=9810
 Left=11145
 Height=4560
 Width=6330
 State=0
 Flags=00000020
-Setting=155:1:main.cpp
+Setting=226:1:main.cpp
 OptionA=0
 
 [_2]
 Type=1
-Order=1
+Order=2
 Top=105
 Left=17670
 Height=4740
