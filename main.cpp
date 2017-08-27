@@ -55,7 +55,7 @@ void printspeed(Screen *s)
 
 void info(Screen *s)
 {
-	s->writeLine("SerMon2.0 by DJPadbit");
+	s->writeLine("SerMo 2.0 by DJPadbit");
 	s->writeLine("Originally by Ziqumu");
 	s->writeLine("F1: min, MAJ, Numbers");
 	s->writeLine("F2: read hexa");
