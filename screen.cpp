@@ -24,6 +24,12 @@ int Screen::init()
 	return 1;
 }
 
+void Screen::cleanup()
+{
+	for (int i=0;i<SCR_NBRLINES;i++) free(screenContent[i]);
+	free(screenContent);
+}
+
 void Screen::writeLine(char* str)
 {
 	if(screenContent[actualLine][0]!=0)

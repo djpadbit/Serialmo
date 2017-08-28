@@ -16,6 +16,7 @@ class Screen{
 	public :
 		Screen();
 		int init();
+		void cleanup();
 		void rewritescreen();
 		void write(char data);
 		void clear();

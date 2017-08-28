@@ -89,8 +89,8 @@ unsigned char* pad(unsigned char* topad)
 	return &toret;
 }*/
 
-void error(unsigned char* err)
-{
+void error(unsigned char* err) // that is really jenky and bad but it works
+{							   // And it's not pretty at all
 	unsigned int key;
 	locate(1,2);		//21
 	Print((unsigned char*)"--------ERROR--------");
@@ -243,6 +243,7 @@ int main()
 		}
 	}
 	Serial_Close(1);
+	screen.cleanup();
 }
 
 extern "C" 
