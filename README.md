@@ -12,6 +12,9 @@ New features include:
 * Ability to change baud rate of serial connection
 * More ?
 
+Speed comparaison between the original version and this one:
+[link](https://www.youtube.com/watch?v=L0rn_0nHMgM)
+
 # Credits
 * Ziqumu for making the original program
 * Pierre "PierrotLL" Le Gall for MonochromeLib
