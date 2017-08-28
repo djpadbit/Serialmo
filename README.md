@@ -2,7 +2,7 @@
 SerialMo is a serial monitor for the casio fx range of calculators.
 The program originally created by Ziqumu was modified and upgraded.
 [Original program](http://www.planet-casio.com/Fr/programmes/voir_un_programme_casio.php?showid=2161&page=last).
-Thanks to Lephenixnoir i know have a good icon
+Thanks to Lephenixnoir i now have a good icon
 
 # Features
 New features include:
