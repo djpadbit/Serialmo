@@ -52,12 +52,14 @@ void Screen::setString(char* str, unsigned char line)
 		char cur = str[j];
 		screenContent[line][j]=cur;
 		char str[] = {cur,0};
-		if (int(line/float(10)) <= scrindex) PrintMini(j*6,6*(line%SCR_DSPLINES),(unsigned char*)str,MINI_OVER); disp = 1;
+		  //int(line/float(SCR_DSPLINES)) <= scrindex
+		if (line < scrindex+SCR_DSPLINES && line > scrindex) PrintMini(j*6,6*(line%SCR_DSPLINES),(unsigned char*)str,MINI_OVER); disp = 1;
 	}
 	screenContent[line][j] = 0;
 	if (disp) {
 		ML_display_vram_lines(6*(line%SCR_DSPLINES),6*((line%SCR_DSPLINES)+1));
-		if (scrindex != int(float(actualLine)/float(SCR_DSPLINES))) setScrindex(int(float(actualLine)/float(SCR_DSPLINES)));
+		//if (scrindex != int(float(actualLine)/float(SCR_DSPLINES))) setScrindex(int(float(actualLine)/float(SCR_DSPLINES)));
+		if (scrindex > actualLine || scrindex+(SCR_DSPLINES-1) < actualLine ) setScrindex(actualLine-(SCR_DSPLINES-1));
 	}
 }
 
@@ -100,7 +102,10 @@ void Screen::write(char data)
 		screenContent[actualLine][longueur] = data;
 		screenContent[actualLine][longueur+1] = 0;
 		//Writing
-		if (scrindex != int(float(actualLine)/float(SCR_DSPLINES))) setScrindex(int(float(actualLine)/float(SCR_DSPLINES)));
+		//if (scrindex < actualLine || scrindex+(SCR_DSPLINES-1) > actualLine ) setScrindex(actualLine-(SCR_DSPLINES-1));
+		if (scrindex > actualLine && actualLine <= 10) setScrindex(0);
+		else if (scrindex > actualLine) setScrindex(actualLine);
+		else if (scrindex+(SCR_DSPLINES-1) < actualLine) setScrindex(actualLine-(SCR_DSPLINES-1));
 		else {
 			char str[] = {data,0};
 			/*if (int(actualLine/float(10)) <= scrindex) */PrintMini(longueur*6,6*(actualLine%SCR_DSPLINES),(unsigned char*)str,MINI_OVER);
@@ -160,7 +165,7 @@ void Screen::rewritescreen()
 	{
 		for(int j=0;j<SCR_CHARSPERLINE;j++)
 		{
-			int k = i+(SCR_DSPLINES*scrindex);//(SCR_DSPLINES*int(float(actualLine)/float(SCR_DSPLINES)));
+			int k = i+scrindex;//(SCR_DSPLINES*scrindex);//(SCR_DSPLINES*int(float(actualLine)/float(SCR_DSPLINES)));
 			//char cur = screenContent[][j]
 			if(screenContent[k][j] == 0)
 				break;

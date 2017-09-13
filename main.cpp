@@ -189,7 +189,8 @@ int main()
 		//DOWN:Scroll down (duh)
 		if(KeyDown(KEY_CTRL_DOWN)){
 			int line = screen.getScrindex();
-			if (line < int(float(SCR_NBRLINES)/float(SCR_DSPLINES))-1) screen.setScrindex(line+1);
+			  //line < int(float(SCR_NBRLINES)/float(SCR_DSPLINES))-1
+			if (line < SCR_NBRLINES-SCR_DSPLINES) screen.setScrindex(line+1);
 			while(KeyDown(KEY_CTRL_DOWN)){Sleep(1);}}
 		//EXE:NewLine 
 		keypressed(KEY_CTRL_EXE,0x0A,0x0A,0x0A);
