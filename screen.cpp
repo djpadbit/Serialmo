@@ -102,10 +102,10 @@ void Screen::write(char data)
 		screenContent[actualLine][longueur] = data;
 		screenContent[actualLine][longueur+1] = 0;
 		//Writing
-		//if (scrindex < actualLine || scrindex+(SCR_DSPLINES-1) > actualLine ) setScrindex(actualLine-(SCR_DSPLINES-1));
-		if (scrindex > actualLine && actualLine <= 10) setScrindex(0);
-		else if (scrindex > actualLine) setScrindex(actualLine);
-		else if (scrindex+(SCR_DSPLINES-1) < actualLine) setScrindex(actualLine-(SCR_DSPLINES-1));
+		if (scrindex < actualLine || scrindex+(SCR_DSPLINES-1) > actualLine ) setScrindex(actualLine-(SCR_DSPLINES-1));
+		//if (scrindex > actualLine && actualLine <= 10) setScrindex(0);
+		//else if (scrindex > actualLine) setScrindex(actualLine);
+		//else if (scrindex+(SCR_DSPLINES-1) < actualLine) setScrindex(actualLine-(SCR_DSPLINES-1));
 		else {
 			char str[] = {data,0};
 			/*if (int(actualLine/float(10)) <= scrindex) */PrintMini(longueur*6,6*(actualLine%SCR_DSPLINES),(unsigned char*)str,MINI_OVER);
