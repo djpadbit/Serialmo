@@ -68,6 +68,7 @@ void info(Screen *s)
 	s->writeLine("SHIFT: Show info");
 	s->writeLine("OPTN: CRLF/LF");
 	s->writeLine("VARS: Serial speed");
+	//s->writeLine("ALPHA:Toggle Rockback");
 	//s->setScrindex(0);
 }
 
@@ -192,6 +193,14 @@ int main()
 			  //line < int(float(SCR_NBRLINES)/float(SCR_DSPLINES))-1
 			if (line < SCR_NBRLINES-SCR_DSPLINES) screen.setScrindex(line+1);
 			while(KeyDown(KEY_CTRL_DOWN)){Sleep(1);}}
+		//ALPHA:Toggle Rockback
+		//still in alpha HA! got the joke ?
+		//sorry
+		/*if(KeyDown(KEY_CTRL_ALPHA)){
+			screen.rockback = !screen.rockback;
+			if(screen.rockback)screen.writeLine("Rockback on");
+			else screen.writeLine("Rockback off");
+			while(KeyDown(KEY_CTRL_ALPHA)){Sleep(1);}}*/
 		//EXE:NewLine 
 		keypressed(KEY_CTRL_EXE,0x0A,0x0A,0x0A);
 		//Letters

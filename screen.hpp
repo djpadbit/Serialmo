@@ -26,6 +26,7 @@ class Screen{
 		void setActualLine(unsigned char line);
 		int getScrindex();
 		void setScrindex(int newscr);
+		//int rockback;
 	private :
 		//char screenContent[SCR_NBRLINES][SCR_CHARSPERLINE+1];
 		char** screenContent;
