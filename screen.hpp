@@ -20,18 +20,20 @@ class Screen{
 		void rewritescreen();
 		void write(char data);
 		void clear();
+		void backspace();
 		void newline();
+		void bell();
 		void setString(char* str, unsigned char line);
 		void writeLine(char* str);
 		void setActualLine(unsigned char line);
-		int getScrindex();
 		void setScrindex(int newscr);
+		int actualLine;
+		int scrindex;
+		int chrindex;
 		//int rockback;
 	private :
 		//char screenContent[SCR_NBRLINES][SCR_CHARSPERLINE+1];
 		char** screenContent;
-		int actualLine;
-		int scrindex;
 };
 
 

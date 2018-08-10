@@ -2,7 +2,6 @@
 Name=Serialmo
 Version=1.00.0000
 Model=:fx-9860G.dlm
-SourcePath=SRC
 MemoryPath=INIT
 MemCardPath=SDCard
 

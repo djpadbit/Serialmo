@@ -20,6 +20,7 @@ int Screen::init()
 	}
 	actualLine = 0;
 	scrindex = 0;
+	chrindex = 0;
 	//rockback = 1;
 	//init screen
 	ML_clear_vram();
@@ -58,6 +59,7 @@ void Screen::setString(char* str, unsigned char line)
 		if (line < scrindex+SCR_DSPLINES && line > scrindex) PrintMini(j*6,6*(line%SCR_DSPLINES),(unsigned char*)str,MINI_OVER); disp = 1;
 	}
 	screenContent[line][j] = 0;
+	chrindex = j;
 	if (disp) {
 		ML_display_vram_lines(6*(line%SCR_DSPLINES),6*((line%SCR_DSPLINES)+1));
 		//if (scrindex != int(float(actualLine)/float(SCR_DSPLINES))) setScrindex(int(float(actualLine)/float(SCR_DSPLINES)));
@@ -74,36 +76,48 @@ void Screen::setActualLine(unsigned char line)
 	}
 }
 
-int Screen::getScrindex()
-{
-	return scrindex;
-}
-
 void Screen::setScrindex(int newscr)
 {
 	scrindex = newscr;
 	rewritescreen();
 }
 
+void Screen::backspace()
+{
+	if (chrindex == 0 && actualLine != 0) {
+		actualLine--;
+		chrindex = SCR_CHARSPERLINE-1;
+	} else chrindex--;
+}
+
+void Screen::bell()
+{
+	ML_point(126, 0, 2, ML_BLACK);
+	//ML_display_vram_lines(0,1);
+	ML_display_vram();
+	Sleep(50);
+	ML_point(126, 0, 2, ML_WHITE);
+	ML_display_vram();
+	//ML_display_vram_lines(0,1);
+}
+
 void Screen::write(char data)
 {
 	//verify if the char is a carrage return or a line feed
-	if(data == 0xD) return;
-	if(data == 0xA)
-	{
-		newline();
-	}
+	if (data == 0xD) return;
+	else if (data == 0xA) newline();
+	else if (data == 0x7) bell();
+	else if (data == 0x8) backspace();
 	else
 	{
-		short unsigned int longueur = strlen(screenContent[actualLine]);
-		if(longueur >= SCR_CHARSPERLINE)
+		if(chrindex >= SCR_CHARSPERLINE)
 		{
 			newline();
-			longueur = 0;
+			chrindex = 0;
 		}
 		//Add the new char
-		screenContent[actualLine][longueur] = data;
-		screenContent[actualLine][longueur+1] = 0;
+		screenContent[actualLine][chrindex] = data;
+		//screenContent[actualLine][chrindex+1] = 0;
 		//Writing
 		if (scrindex < actualLine && actualLine > (SCR_DSPLINES-1) /*&& rockback*/ || scrindex+(SCR_DSPLINES-1) > actualLine && actualLine > (SCR_DSPLINES-1) /*&& rockback*/ ) setScrindex(actualLine-(SCR_DSPLINES-1));
 		//if (scrindex > actualLine && actualLine <= 10) setScrindex(0);
@@ -111,9 +125,10 @@ void Screen::write(char data)
 		//else if (scrindex+(SCR_DSPLINES-1) < actualLine) setScrindex(actualLine-(SCR_DSPLINES-1));
 		else/* if (actualLine > scrindex && actualLine < scrindex+(SCR_DSPLINES-1))*/ {
 			char str[] = {data,0};
-			/*if (int(actualLine/float(10)) <= scrindex) */PrintMini(longueur*6,6*(actualLine%SCR_DSPLINES),(unsigned char*)str,MINI_OVER);
+			/*if (int(actualLine/float(10)) <= scrindex) */PrintMini(chrindex*6,6*(actualLine%SCR_DSPLINES),(unsigned char*)str,MINI_OVER);
 			ML_display_vram_lines(6*(actualLine%SCR_DSPLINES),6*((actualLine%SCR_DSPLINES)+1));
 		}
+		chrindex++;
 		//int k = actualLine % SCR_DSPLINES;
 		//char str[] = {data,0};
 		//PrintMini(longueur*6,6*k,(unsigned char*)str,MINI_OVER);
@@ -150,12 +165,14 @@ void Screen::newline()
 			}
 		}
 		screenContent[actualLine][0] = 0;
+
 		rewritescreen();
 	}
 	else
 	{
 		actualLine++;
 		screenContent[actualLine][0] = 0;
+		chrindex = 0;
 		//rewritescreen();
 	}
 }

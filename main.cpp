@@ -62,7 +62,8 @@ void info(Screen *s)
 	s->writeLine("F3: clear");
 	s->writeLine("F4: key repeat");
 	s->writeLine("F5: show sended char");
-	s->writeLine("F6: quit");
+	s->writeLine("F6: toggle DEL mode");
+	s->writeLine("MENU: quit");
 	s->writeLine("UP: Go up");
 	s->writeLine("DOWN: Go down");
 	s->writeLine("SHIFT: Show info");
@@ -113,8 +114,9 @@ int main()
 	//defaults settings
 	bool hex = false;
 	bool repetition = false;
-	bool showSended = true;
+	bool showSended = false;
 	bool unix = true;
+	bool del = false;
 	unsigned char writemode = 0;//0:min , 1:maj, 2:nombres
 	//init
 	unsigned char readbyte = 0;
@@ -160,8 +162,14 @@ int main()
 			if(showSended)screen.writeLine("Show sended chars");
 			else screen.writeLine("Hide sended chars");
 			while(KeyDown(KEY_CTRL_F5)){Sleep(1);}}
-		//F6&Menu:Quit
-		if(KeyDown(KEY_CTRL_F6)||KeyDown(KEY_CTRL_MENU)){
+		//F6:Change DEL between backspace and delete
+		if(KeyDown(KEY_CTRL_F6)){
+			del=!del;
+			if(del)screen.writeLine("DEL is now delete");
+			else screen.writeLine("DEL is now backspace");
+			while(KeyDown(KEY_CTRL_F6)){Sleep(1);}}
+		//Menu:Quit
+		if(KeyDown(KEY_CTRL_MENU)){
 			break;
 			//while(KeyDown(KEY_CTRL_F6)||KeyDown(KEY_CTRL_MENU)){Sleep(1);}
 		}
@@ -184,12 +192,12 @@ int main()
 			while(KeyDown(KEY_CTRL_SHIFT)){Sleep(1);}}
 		//UP:Scroll up (duh)
 		if(KeyDown(KEY_CTRL_UP)){
-			int line = screen.getScrindex();
+			int line = screen.scrindex;
 			if (line > 0) screen.setScrindex(line-1);
 			while(KeyDown(KEY_CTRL_UP)){Sleep(1);}}
 		//DOWN:Scroll down (duh)
 		if(KeyDown(KEY_CTRL_DOWN)){
-			int line = screen.getScrindex();
+			int line = screen.scrindex;
 			  //line < int(float(SCR_NBRLINES)/float(SCR_DSPLINES))-1
 			if (line < SCR_NBRLINES-SCR_DSPLINES) screen.setScrindex(line+1);
 			while(KeyDown(KEY_CTRL_DOWN)){Sleep(1);}}
@@ -231,7 +239,8 @@ int main()
 		keypressed(KEY_CHAR_PLUS,'x','X','+');
 		keypressed(KEY_CHAR_MINUS,'y','y','-');
 		keypressed(KEY_CHAR_MULT,'s','S','*');
-		keypressed(KEY_CHAR_DIV,'t','T','/')
+		keypressed(KEY_CHAR_DIV,'t','T','/');
+		keypressed(KEY_CTRL_DEL, del?0x7f:0x8, del?0x7f:0x8, del?0x7f:0x8);
 		//Read serial
 		if(Serial_ReadByte(&readbyte)==0) {
 			if(!hex) {
