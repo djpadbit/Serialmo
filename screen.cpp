@@ -104,7 +104,7 @@ void Screen::bell()
 void Screen::write(char data)
 {
 	//verify if the char is a carrage return or a line feed
-	if (data == 0xD) return;
+	if (data == 0xD) chrindex = 0;
 	else if (data == 0xA) newline();
 	else if (data == 0x7) bell();
 	else if (data == 0x8) backspace();
@@ -164,8 +164,9 @@ void Screen::newline()
 				screenContent[i][j]=screenContent[i+1][j];
 			}
 		}
-		screenContent[actualLine][0] = 0;
-
+		memset(screenContent[actualLine],0,SCR_CHARSPERLINE);
+		//screenContent[actualLine][0] = 0;
+		chrindex = 0;
 		rewritescreen();
 	}
 	else
